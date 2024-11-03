@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: LearnAi
+  jpa:
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost:3306/learnAi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+
+app:
+  cors:
+    allowed-origins: http://localhost:3000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
