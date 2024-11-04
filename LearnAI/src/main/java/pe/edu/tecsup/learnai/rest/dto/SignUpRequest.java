@@ -16,14 +16,6 @@ public class SignUpRequest {
     @NotBlank
     private String password;
 
-    @Schema(example = "User3")
-    @NotBlank
-    private String name;
-
-    @Schema(example = "User3")
-    @NotBlank
-    private String last_name;
-
     @Schema(example = "user3@mycompany.com")
     @Email
     private String email;

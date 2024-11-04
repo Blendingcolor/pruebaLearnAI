@@ -32,7 +32,7 @@ public class AuthController{
         Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return ResponseEntity.ok(new AuthResponse(user.getId(), user.getName())); // Sin role
+            return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername())); // Sin role
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
@@ -48,15 +48,13 @@ public class AuthController{
         }
 
         User user = userService.saveUser(createUser(signUpRequest));
-        return new AuthResponse(user.getId(), user.getName());
+        return new AuthResponse(user.getId(), user.getUsername());
     }
 
     private User createUser(SignUpRequest signUpRequest) {
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(signUpRequest.getPassword());
-        user.setLast_name(signUpRequest.getLast_name());
-        user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         return user;
     }
