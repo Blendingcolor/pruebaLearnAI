@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public boolean hasUserWithUsername(String username) {
         return userRepository.existsByUsername(username);
     }
@@ -59,6 +64,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> validUsernameAndPassword(String username, String password) {
         return getUserByUsername(username)
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()));
+    }
+
+    @Override
+    public Optional<User> validEmailAndPassword(String email, String password) {
+        return getUserByEmail(email)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 }

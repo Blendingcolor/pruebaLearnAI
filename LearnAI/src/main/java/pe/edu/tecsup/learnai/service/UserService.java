@@ -10,6 +10,8 @@ public interface UserService {
 
     Optional<User> getUserByUsername(String username);
 
+    Optional<User> getUserByEmail(String email);
+
     boolean hasUserWithUsername(String username);
 
     boolean hasUserWithEmail(String email);
@@ -21,4 +23,6 @@ public interface UserService {
     void deleteUser(User user);
 
     Optional<User> validUsernameAndPassword(String username, String password);
+
+    Optional<User> validEmailAndPassword(String email, String password);
 }

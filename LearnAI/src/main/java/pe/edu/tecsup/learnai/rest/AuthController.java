@@ -15,7 +15,6 @@ import pe.edu.tecsup.learnai.exception.DuplicatedUserInfoException;
 import pe.edu.tecsup.learnai.rest.dto.AuthResponse;
 import pe.edu.tecsup.learnai.rest.dto.LoginRequest;
 import pe.edu.tecsup.learnai.rest.dto.SignUpRequest;
-import pe.edu.tecsup.learnai.security.WebSecurityConfig;
 import pe.edu.tecsup.learnai.service.UserService;
 
 import java.util.Optional;
@@ -29,10 +28,10 @@ public class AuthController{
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
-        Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
+        Optional<User> userOptional = userService.validEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername())); // Sin role
+            return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername(), user.getEmail()));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
@@ -48,7 +47,7 @@ public class AuthController{
         }
 
         User user = userService.saveUser(createUser(signUpRequest));
-        return new AuthResponse(user.getId(), user.getUsername());
+        return new AuthResponse(user.getId(), user.getUsername(), user.getEmail());
     }
 
     private User createUser(SignUpRequest signUpRequest) {
